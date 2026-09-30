@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gemelo Económico · Ingreso libre de datos</title>
+<style>
+:root{--azul:#2E86AB;--azul-osc:#1B4F72;--naranja:#E76F51;--morado:#7A5195;--dorado:#F2A33C;--verde:#2E8B57;--rojo:#C0392B;--gris:#5B6770;--fondo:#F4F7F9;--linea:#D5DBDB;--texto:#1B2631}
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;color:var(--texto);background:var(--fondo)}
+header{background:linear-gradient(135deg,var(--azul-osc),var(--azul));color:#fff;padding:26px 22px}header h1{margin:0 0 6px;font-size:26px}header p{margin:0;opacity:.92;font-size:14px}
+main{max-width:1180px;margin:0 auto;padding:20px 16px 80px}.aviso{background:#FFF3CD;border:1px solid #FFC107;padding:12px 14px;border-radius:8px;margin:18px 0;font-size:14px}.aviso b{color:#7A5B00}
+h2{font-size:18px;color:var(--azul-osc);margin:34px 0 6px;border-bottom:2px solid var(--linea);padding-bottom:6px}h2 span{font-size:13px;color:var(--gris);font-weight:normal}
+.grid{display:grid;gap:14px}.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.tarjeta{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:14px}.campo label{display:flex;justify-content:space-between;font-size:13px;font-weight:600;gap:8px}.unidad{color:var(--gris);font-weight:400;font-size:12px}
+input[type=number]{width:100%;padding:11px 10px;border:1px solid #B8C2C8;border-radius:7px;font-size:15px;margin-top:9px;text-align:right;outline:none}input[type=number]:focus{border-color:var(--azul);box-shadow:0 0 0 2px #DCEFF6}
+.ayuda{font-size:11px;color:var(--gris);margin-top:6px}.res{background:#fff;border:1px solid var(--linea);border-left:5px solid var(--azul);border-radius:10px;padding:12px 14px}.res .et{font-size:12px;color:var(--gris)}.res .vl{font-size:22px;font-weight:700;color:var(--azul-osc);margin:2px 0;word-break:break-all}.res .un{font-size:12px;color:var(--gris)}.res .rg{float:right;font-size:11px;color:#fff;background:var(--azul);padding:2px 7px;border-radius:10px}.rojo{border-left-color:var(--naranja)}.rojo .vl{color:var(--naranja)}.ambar{border-left-color:var(--dorado)}.ambar .vl{color:#A9761A}.verde{border-left-color:var(--verde)}.verde .vl{color:var(--verde)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:#fff}th,td{border:1px solid var(--linea);padding:7px 9px;text-align:right}th{background:var(--azul);color:#fff}th:first-child,td:first-child,th.l,td.l{text-align:left}tr:nth-child(even) td{background:#F7FAFA}.barra{height:14px;background:#EDF1F3;border-radius:7px;overflow:hidden;position:relative;min-width:90px}.barra i{display:block;height:100%;background:linear-gradient(90deg,var(--azul),var(--morado))}.barra i.neg{background:linear-gradient(90deg,var(--naranja),#E9B44C)}
+.mono{font-family:Consolas,ui-monospace,monospace;font-size:12px;color:var(--gris)}.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:#EAF2F5;color:var(--azul-osc)}.chip.ok{background:#E4F4EA;color:var(--verde)}.chip.mal{background:#FBE6E3;color:var(--rojo)}
+button{background:var(--azul-osc);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;cursor:pointer}button.sec{background:#fff;color:var(--azul-osc);border:1px solid var(--azul)}button:hover{filter:brightness(1.1)}.barra-bot{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--linea);padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}.error{background:#FBE6E3;border:1px solid var(--naranja);color:#8C2A1C;padding:10px 12px;border-radius:8px;font-size:13px}footer{max-width:1180px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:var(--gris)}details{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:10px 14px}summary{cursor:pointer;font-weight:600;color:var(--azul-osc)}
+@media print{.barra-bot,button{display:none!important}body{background:white}}
+</style>
+</head>
+<body>
+<header><h1>💰 Gemelo Económico</h1><p>9 entradas · 9 resultados · ingreso libre de valores · todo se calcula en tu navegador</p></header>
+<main>
+<div class="aviso"><b>✏️ INGRESO LIBRE DE DATOS.</b> Puedes escribir directamente cualquier valor numérico en cada apartado. No se utilizan controles deslizantes ni límites mínimos o máximos impuestos por la interfaz.</div>
+<h2>1 · Las 9 entradas oficiales <span>(escribe los datos directamente)</span></h2>
+<div class="grid g3" id="entradas"></div>
+<h2>2 · Los 9 resultados oficiales <span>(se actualizan automáticamente)</span></h2>
+<div class="grid g4" id="resultados"></div><div id="aviso48"></div>
+<h2>3 · Indicadores derivados</h2><div class="grid g4" id="derivados"></div>
+<h2>4 · Trazabilidad</h2><div style="overflow-x:auto"><table id="trazabilidad"></table></div>
+<h2>5 · Sensibilidad de la utilidad <span>(±5 %)</span></h2><div style="overflow-x:auto"><table id="sensibilidad"></table></div>
+<h2>6 · Reglas del modelo</h2><details open><summary>Ver las 9 reglas</summary><div style="overflow-x:auto;margin-top:10px"><table id="reglas"></table></div></details>
+<h2>7 · Exportar</h2><details><summary>Descargar resultados o imprimir</summary><p class="mono" id="hashline">Resultados calculados localmente.</p><button class="sec" onclick="descargarJSON()">Descargar JSON</button> <button class="sec" onclick="window.print()">Imprimir / Guardar PDF</button></details>
+</main>
+<div class="barra-bot"><button onclick="restablecer()">Restablecer</button><button class="sec" onclick="limpiar()">Limpiar todos los campos</button><span id="estado" class="chip ok">motor listo</span></div>
+<footer>Esta versión funciona en un único archivo HTML y no envía los datos a ningún servidor.</footer>
+<script>
+const ENTRADAS=[
+ {clave:'material',etiqueta:'Material utilizado por unidad',unidad:'u',paso:.01,valor:10},
+ {clave:'desperdicio',etiqueta:'Desperdicio',unidad:'%',paso:.01,valor:5},
+ {clave:'precio_material',etiqueta:'Precio del material',unidad:'moneda/u',paso:.01,valor:2},
+ {clave:'mano_obra',etiqueta:'Mano de obra directa',unidad:'moneda/u',paso:.01,valor:4},
+ {clave:'cif_variable',etiqueta:'CIF variable',unidad:'moneda/u',paso:.01,valor:1},
+ {clave:'costos_fijos',etiqueta:'Costos fijos',unidad:'moneda',paso:.01,valor:5000},
+ {clave:'volumen',etiqueta:'Volumen planificado',unidad:'unidades',paso:1,valor:1000},
+ {clave:'precio_venta',etiqueta:'Precio de venta',unidad:'moneda/u',paso:.01,valor:15},
+ {clave:'otros_variables',etiqueta:'Otros costos variables',unidad:'moneda/u',paso:.01,valor:0}
+];
+const RESULTADOS=[
+ ['material_ajustado','Material ajustado','u','4.1',4],['costo_mp_unitario','Costo de materia prima unitario','moneda/u','4.2',4],['costo_mod_unitario','Costo MOD unitario','moneda/u','4.3',4],['costo_variable_unitario','Costo variable unitario','moneda/u','4.4',4],['costo_total_variable','Costo variable total','moneda','4.5',2],['costo_unitario','Costo unitario','moneda/u','4.6',4],['margen_contribucion_unitario','Margen de contribución unitario','moneda/u','4.7',4],['punto_equilibrio','Punto de equilibrio','unidades','4.8',2],['utilidad','Utilidad','moneda','4.9',2]
+];
+const FORMULAS={
+ '4.1':'Material ajustado = material × (1 + desperdicio)','4.2':'Costo MP unitario = material ajustado × precio del material','4.3':'Costo MOD unitario = mano de obra directa','4.4':'Costo variable unitario = costo MP + MOD + CIF variable + otros variables','4.5':'Costo variable total = costo variable unitario × volumen','4.6':'Costo unitario = costo variable unitario + costos fijos / volumen','4.7':'Margen de contribución unitario = precio de venta − costo variable unitario','4.8':'Punto de equilibrio = costos fijos / margen de contribución unitario','4.9':'Utilidad = margen de contribución unitario × volumen − costos fijos'
+};
+const ids={};
+function num(k){const v=parseFloat(document.getElementById('n_'+k).value);return Number.isFinite(v)?v:0}
+function money(v,d=2){return Number.isFinite(v)?v.toLocaleString('es-GT',{minimumFractionDigits:d,maximumFractionDigits:d}):'no calculable'}
+function construir(){
+ const c=document.getElementById('entradas');
+ c.innerHTML=ENTRADAS.map(e=>`<div class="tarjeta campo"><label><span>${e.etiqueta}</span><span class="unidad">${e.unidad}</span></label><input type="number" id="n_${e.clave}" step="any" value="${e.valor}" placeholder="Escriba un valor"><div class="ayuda">Valor ingresado por el usuario. Sin límite mínimo o máximo en la interfaz.</div></div>`).join('');
+ ENTRADAS.forEach(e=>document.getElementById('n_'+e.clave).addEventListener('input',calcular));
+ document.getElementById('reglas').innerHTML='<tr><th class="l">Regla</th><th class="l">Fórmula</th></tr>'+Object.entries(FORMULAS).map(([k,v])=>`<tr><td class="l"><span class="chip">${k}</span></td><td class="l">${v}</td></tr>`).join('');
+}
+function calcular(){
+ const d={};ENTRADAS.forEach(e=>d[e.clave]=num(e.clave));
+ const material=d.material*(1+d.desperdicio/100), mp=material*d.precio_material, mod=d.mano_obra;
+ const cv=mp+mod+d.cif_variable+d.otros_variables, cvt=cv*d.volumen, cu=cv+(d.volumen?d.costos_fijos/d.volumen:0), mcu=d.precio_venta-cv;
+ const pe=mcu>0?d.costos_fijos/mcu:null, utilidad=mcu*d.volumen-d.costos_fijos;
+ const r={material_ajustado:material,costo_mp_unitario:mp,costo_mod_unitario:mod,costo_variable_unitario:cv,costo_total_variable:cvt,costo_unitario:cu,margen_contribucion_unitario:mcu,punto_equilibrio:pe,utilidad};
+ pintarResultados(d,r); pintarDerivados(d,r); pintarTrazabilidad(d,r); pintarSensibilidad(d); window.ULTIMO={d,r};
+ document.getElementById('estado').className='chip ok';document.getElementById('estado').textContent='motor consistente';
+}
+function pintarResultados(d,r){document.getElementById('resultados').innerHTML=RESULTADOS.map(x=>{let v=r[x[0]],cl='';if(x[0]==='utilidad')cl=v<=0?'rojo':'verde';if(x[0]==='margen_contribucion_unitario')cl=v<=0?'rojo':(v/d.precio_venta<.1?'ambar':'verde');if(x[0]==='punto_equilibrio'&&v===null)cl='rojo';return `<div class="res ${cl}"><span class="rg">${x[3]}</span><div class="et">${x[1]}</div><div class="vl">${v===null?'no calculable':money(v,x[4])}</div><div class="un">${x[2]}</div></div>`}).join('');document.getElementById('aviso48').innerHTML=r.punto_equilibrio===null?'<div class="error"><b>Regla 4.8:</b> el margen de contribución no es positivo; no puede calcularse un punto de equilibrio válido.</div>':''}
+function pintarDerivados(d,r){const a=[['Tasa de margen',d.precio_venta?r.margen_contribucion_unitario/d.precio_venta*100:null,'%'],['Margen de seguridad',r.punto_equilibrio===null?null:(d.volumen-r.punto_equilibrio)/d.volumen*100,'%'],['Margen de seguridad en unidades',r.punto_equilibrio===null?null:d.volumen-r.punto_equilibrio,'u'],['Facturación de equilibrio',r.punto_equilibrio===null?null:r.punto_equilibrio*d.precio_venta,'moneda'],['Utilidad por unidad adicional',r.margen_contribucion_unitario,'moneda/u'],['Utilidad en equilibrio',r.punto_equilibrio===null?null:0,'moneda']];document.getElementById('derivados').innerHTML=a.map(x=>`<div class="res"><div class="et">${x[0]}</div><div class="vl">${x[1]===null?'no calculable':money(x[1],2)}</div><div class="un">${x[2]}</div></div>`).join('')}
+function pintarTrazabilidad(d,r){document.getElementById('trazabilidad').innerHTML='<tr><th class="l">Regla</th><th class="l">Resultado</th><th class="l">Fórmula</th><th class="l">Valor</th></tr>'+RESULTADOS.map(x=>`<tr><td class="l"><span class="chip">${x[3]}</span></td><td class="l">${x[1]}</td><td class="l">${FORMULAS[x[3]]}</td><td class="l">${r[x[0]]===null?'no calculable':money(r[x[0]],4)}</td></tr>`).join('')}
+function pintarSensibilidad(d){const base=window.ULTIMO?.r?.utilidad??0;document.getElementById('sensibilidad').innerHTML='<tr><th class="l">Entrada</th><th>Valor actual</th><th>Utilidad +5%</th><th>Utilidad -5%</th><th>Efecto</th></tr>'+ENTRADAS.map(e=>{const x=d[e.clave],up=Object.assign({},d,{[e.clave]:x*1.05}),dn=Object.assign({},d,{[e.clave]:x*.95});const a=calcUtil(up),b=calcUtil(dn);return `<tr><td class="l">${e.etiqueta}</td><td>${money(x,4)}</td><td>${money(a,2)}</td><td>${money(b,2)}</td><td>${money(a-b,2)}</td></tr>`}).join('')}
+function calcUtil(d){const mp=d.material*(1+d.desperdicio/100)*d.precio_material;const cv=mp+d.mano_obra+d.cif_variable+d.otros_variables;return (d.precio_venta-cv)*d.volumen-d.costos_fijos}
+function restablecer(){ENTRADAS.forEach(e=>document.getElementById('n_'+e.clave).value=e.valor);calcular()}
+function limpiar(){ENTRADAS.forEach(e=>document.getElementById('n_'+e.clave).value='');calcular()}
+function descargarJSON(){if(!window.ULTIMO)return;const out={datos_de_entrada:window.ULTIMO.d,resultados:window.ULTIMO.r,formulas:FORMULAS};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}));a.download='gemelo_economico_resultados.json';a.click()}
+construir();calcular();
+</script>
+</body></html>
